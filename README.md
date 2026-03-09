@@ -1,6 +1,6 @@
 ## Crypto AI Platform
 
-A small Flask-based **crypto market analyzer** that fetches OHLCV data from Binance, computes technical indicators (RSI, MACD, ATR), evaluates risk, and generates **AI commentary** using a pluggable provider (Groq / heuristic / Ollama / Gemini).
+A small Flask-based **crypto market analyzer** that fetches OHLCV data from Binance, computes technical indicators (RSI, MACD, ATR), evaluates risk, and generates **AI commentary** using a pluggable provider (Groq).
 
 The frontend is a single-page dashboard (`index.html`) that shows a clean report view plus the raw JSON returned by the API.
 
@@ -15,8 +15,7 @@ The frontend is a single-page dashboard (`index.html`) that shows a clean report
 - **AI commentary providers (configurable)**:
   - `groq` – Groq OpenAI-compatible API (recommended)
   - `heuristic` – fully local, rule-based commentary (no external LLM)
-  - `ollama` – free local LLM via Ollama
-  - `gemini` – optional Gemini provider (if you have quota)
+
 - **Modern UI**:
   - Symbol + timeframe controls
   - Cards for overview, risk, commentary
@@ -30,8 +29,6 @@ The frontend is a single-page dashboard (`index.html`) that shows a clean report
 - **Data / indicators**: `requests`, `pandas`, `ta`
 - **AI**:
   - Groq (OpenAI-compatible `/chat/completions`)
-  - Optional Gemini (`google-generativeai` / `google-genai`)
-  - Optional Ollama (local)
 - **Frontend**: vanilla JS, modern CSS, single HTML template
 
 ---
@@ -57,11 +54,11 @@ The frontend is a single-page dashboard (`index.html`) that shows a clean report
 
 From the project root (`C:\Rishee_Folder\crypto_ai_platform` on your machine):
 
-1. **Create & activate a virtualenv (optional but recommended)**
+1. **Create & activate a virtualenv**
    ```bash
    python -m venv venv
    # Windows PowerShell
-   .\venv\Scripts\Activate.ps1
+   venv\Scripts\Activate
    ```
 
 2. **Install dependencies**
@@ -76,14 +73,7 @@ From the project root (`C:\Rishee_Folder\crypto_ai_platform` on your machine):
    AI_PROVIDER=groq
    GROQ_API_KEY=your_groq_api_key_here
 
-   # Optional: choose a different provider
-   # AI_PROVIDER=heuristic   # no external LLM, fully local
-   # AI_PROVIDER=ollama      # uses local Ollama, see below
-   # AI_PROVIDER=gemini      # uses Gemini, requires GOOGLE_API_KEY
    ```
-
-   You can mix in other variables as needed (see next section).
-
 ---
 
 ## Environment variables
@@ -95,18 +85,12 @@ These are read via `python-dotenv` in `app.py` and `agents/analysis_agent.py`.
 - **`AI_PROVIDER`** – which commentary backend to use:
   - `groq` (recommended)
   - `heuristic`
-  - `ollama`
-  - `gemini`
 
 ### Groq (recommended)
 
 Used when `AI_PROVIDER=groq`:
 
 - **`GROQ_API_KEY`** – your Groq API key (required)
-- `GROQ_MODEL` – model name, default: `llama-3.1-8b-instant`
-- `GROQ_BASE_URL` – default: `https://api.groq.com/openai/v1`
-- `GROQ_TIMEOUT` – request timeout in seconds, default: `30`
-- `GROQ_MAX_TOKENS` – max tokens for completion, default: `350`
 
 See `GROQ_SETUP.md` in the project root for a quick reference.
 
@@ -117,26 +101,6 @@ Used when `AI_PROVIDER=heuristic`:
 - No additional env vars required.
 - Commentary is generated from RSI/ATR using simple rules.
 
-### Ollama (local model, optional)
-
-Used when `AI_PROVIDER=ollama`:
-
-- `OLLAMA_BASE_URL` – default: `http://127.0.0.1:11434`
-- `OLLAMA_MODEL` – default: `llama3.2`
-- `OLLAMA_TIMEOUT` – default: `30`
-
-If Ollama is not running or errors, the app falls back to the heuristic provider.
-
-### Gemini (optional)
-
-Used when `AI_PROVIDER=gemini`:
-
-- `GOOGLE_API_KEY` – Gemini API key
-- `GEMINI_MODEL` – default: `gemini-2.0-flash`
-
-If Gemini errors (e.g. quota 429), the app falls back to heuristic commentary.
-
----
 
 ## Running the app
 
@@ -219,9 +183,5 @@ If something goes wrong, the status pill and the report area will display the er
 
 ---
 
-## Notes
-
-- This project is for **educational / research** purposes only and **not** financial advice.
-- Risk logic and commentary are simplified; always validate any trading decisions independently.
 
 
