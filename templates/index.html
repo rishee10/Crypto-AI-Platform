@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Crypto AI Market Analyzer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/app.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">CA</div>
+        <div class="brand__text">
+          <div class="brand__title">Crypto AI Platform</div>
+          <div class="brand__sub">Indicators + risk + commentary</div>
+        </div>
+      </div>
+      <div class="status" id="statusPill" aria-live="polite">Ready</div>
+    </header>
+
+    <main class="grid">
+      <section class="card card--controls">
+        <div class="card__title">Analyze</div>
+        <div class="form">
+          <label class="field">
+            <span class="field__label">Symbol</span>
+            <input id="symbol" class="field__input" value="ETHUSDT" placeholder="e.g. BTCUSDT" autocomplete="off" />
+          </label>
+
+          <label class="field">
+            <span class="field__label">Timeframe</span>
+            <select id="timeframe" class="field__input">
+              <option value="15m">15m</option>
+              <option value="1h" selected>1h</option>
+              <option value="4h">4h</option>
+              <option value="1d">1d</option>
+            </select>
+          </label>
+
+          <button id="analyzeBtn" class="btn" type="button">
+            <span class="btn__label">Run analysis</span>
+            <span class="btn__spinner" aria-hidden="true"></span>
+          </button>
+
+          <div class="hint">
+            Try:
+            <button class="chip" type="button" data-symbol="BTCUSDT">BTCUSDT</button>
+            <button class="chip" type="button" data-symbol="ETHUSDT">ETHUSDT</button>
+            <button class="chip" type="button" data-symbol="SOLUSDT">SOLUSDT</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="card card--report">
+        <div class="card__title">Report</div>
+        <div id="report" class="report">
+          <div class="empty">Run an analysis to see results here.</div>
+        </div>
+      </section>
+
+      <section class="card card--raw">
+        <div class="card__title">Raw JSON</div>
+        <pre id="raw" class="raw" aria-label="Raw JSON output"></pre>
+      </section>
+    </main>
+
+    <footer class="footer">
+      Data: Binance klines · Commentary: Groq/Heuristic/Ollama/Gemini (configurable)
+    </footer>
+  </div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+Flask
+flask_sqlalchemy
+requests
+pandas
+numpy
+ta
+python-dotenv
+openai
+reportlab
+google-generativeai
